@@ -3,5 +3,5 @@ from wtforms import TextField
 from wtforms.validators import Required
 
 class SubjectForm(Form):
-    name = TextField('name', validators = [Required()])
+    name = TextField("name", validators = [Required()])
     recaptcha = RecaptchaField()
