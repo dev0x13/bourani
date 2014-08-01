@@ -11,6 +11,7 @@
     <p>{{ form.recaptcha }}</p>
     <p><input type='submit' value='Добавить'></p>
 </form>
+<hr>
 {% for subject in subjects %}
   <a href='{{ url_for("subject", uid = subject.uid) }}'>{{ subject.name }}</a>
   <br>

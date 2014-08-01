@@ -1,0 +1,20 @@
+{% extends 'layout.html' %}
+{% block content %}
+<h1>Файлы</h1>
+<hr>
+<form action='' method='post' name='subject' enctype='multipart/form-data'>
+    {{ form.hidden_tag() }}
+    <p>
+        Описание:
+        {{ form.description }}<br>
+    </p>
+    <p>{{ form.file_to_upload }}</p>
+    <!-- <p>{{ form.recaptcha }}</p> -->
+    <p><input type='submit' value='Загрузить'></p>
+</form>
+<hr>
+{% for file in files %}
+  <a href='{{ url_for("download", uid = file.uid) }}'>{{ file.filename }}</a>
+  <br>
+{% endfor %}
+{% endblock %}

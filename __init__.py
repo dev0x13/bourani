@@ -46,9 +46,14 @@ def department(uid):
 def subjects(department, course):
     return Subjects.index(department, course)
 
-@app.route("/subject/<uid>")
+@app.route("/subject/<uid>", methods = methods)
 def subject(uid):
-    return Files.index(subject)
+    return Files.index(uid)
+
+@app.route("/download/<uid>")
+def download(uid):
+    return Files.download(uid)
+
 
 if __name__ == "__main__":
     app.run()
