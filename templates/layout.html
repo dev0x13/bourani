@@ -1,10 +1,19 @@
-<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd'>
+<!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN' 'http://www.w3.org/TR/html4/loose.dtd'>
 <html>
   <head>
     <meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
+    <link rel='shortcut icon' href='{{ url_for("static", filename = "favicon.ico") }}'>
     <title>Bourani</title>
   </head>
   <body>
     {% block content %}{% endblock %}
+    <hr>
+    <div style = 'text-align: center;'>
+      bourani
+      <br>
+      2014 - &infin;
+      <br>
+      <a href = '{{ url_for("info") }}'>info</a>
+    </div>
   </body>
 </html>

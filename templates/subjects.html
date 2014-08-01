@@ -1,0 +1,18 @@
+{% extends 'layout.html' %}
+{% block content %}
+<h1>Предметы</h1>
+<hr>
+<form action='' method='post' name='subject'>
+    {{ form.hidden_tag() }}
+    <p>
+        Название предмета:
+        {{ form.name(size = 20 )}}<br>
+    </p>
+    <p>{{ form.recaptcha }}</p>
+    <p><input type='submit' value='Добавить'></p>
+</form>
+{% for subject in subjects %}
+  <a href='{{ url_for("subject", uid = subject.uid) }}'>{{ subject.name }}</a>
+  <br>
+{% endfor %}
+{% endblock %}

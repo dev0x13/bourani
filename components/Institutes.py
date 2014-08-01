@@ -8,13 +8,7 @@ sys.path.append(os.path.abspath(".."))
 from db_connection import db
 
 def index():
-    query = "SELECT * FROM institutes"
+    query = "SELECT * FROM institutes ORDER BY name ASC"
     db.execute(query)
     institutes = db.fetchall()
     return render_template("institutes.html", institutes = institutes)
-
-def show_institute(uid):
-    query = "SELECT uid FROM departments WHERE institute = %s"
-    data = (uid)
-    departments = db.execute(query)
-    return render_template("departments.html", departments = departments)

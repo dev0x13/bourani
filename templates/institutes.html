@@ -1,6 +1,7 @@
 {% extends 'layout.html' %}
 {% block content %}
-<h1>Bourani</h1>
+<h1>Институты</h1>
+<hr>
 {% for institute in institutes %}
   <a href='{{ url_for("institute", uid = institute.uid) }}'>{{ institute.name }}</a>
   <br>

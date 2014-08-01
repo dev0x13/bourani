@@ -1,0 +1,9 @@
+{% extends 'layout.html' %}
+{% block content %}
+<h1>Кафедры</h1>
+<hr>
+{% for department in departments %}
+  <a href='{{ url_for("department", uid = department.uid) }}'>{{ department.name }}</a>
+  <br>
+{% endfor %}
+{% endblock %}

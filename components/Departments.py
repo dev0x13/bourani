@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
 
-from flask import render_template, redirect, request, url_for, g, send_file, abort
+from flask import render_template
 import os
 import sys
 
 sys.path.append(os.path.abspath(".."))
 from db_connection import db
 
-def index():
-    query = "SELECT uid FROM departments"
-    institutes = db.execute(query)
+def index(uid):
+    query = "SELECT * FROM departments WHERE institute = %s ORDER BY name ASC"
+    data = (uid)
+    db.execute(query, data)
+    departments = db.fetchall()
     return render_template("departments.html", departments = departments)

@@ -4,7 +4,7 @@ from flask import Flask, render_template, flash, redirect, session, url_for, req
 from flask.ext.login import logout_user, LoginManager, current_user, login_required
 from db_connection import db
 from config import DefaultConfig
-from components import Institutes, User, Departments
+from components import Institutes, User, Departments, Courses, Info, Subjects, Files
 
 app = Flask(__name__)
 app.config.from_object(DefaultConfig)
@@ -30,9 +30,25 @@ methods = ["GET", "POST"]
 def index():
     return Institutes.index()
 
+@app.route("/info")
+def info():
+    return Info.index()
+
 @app.route("/institute/<uid>")
 def institute(uid):
     return Departments.index(uid)
+
+@app.route("/departments/<uid>")
+def department(uid):
+    return Courses.index(uid)
+
+@app.route("/subjects/<department>/<course>", methods = methods)
+def subjects(department, course):
+    return Subjects.index(department, course)
+
+@app.route("/subject/<uid>")
+def subject(uid):
+    return Files.index(subject)
 
 if __name__ == "__main__":
     app.run()
