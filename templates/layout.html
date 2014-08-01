@@ -6,6 +6,9 @@
     <title>Bourani</title>
   </head>
   <body>
+    {% if current_user.is_authenticated(): %}
+    aaa
+    {% endif %}
     {% block content %}{% endblock %}
     <hr>
     <div style = 'text-align: center;'>

@@ -4,29 +4,39 @@ from flask import Flask, render_template, flash, redirect, session, url_for, req
 from flask.ext.login import logout_user, LoginManager, current_user, login_required
 from db_connection import db
 from config import DefaultConfig
-from components import Institutes, User, Departments, Courses, Info, Subjects, Files
+from components import Institutes, User, Departments, Courses, Info, Subjects, Files, AdminAuth
 
 app = Flask(__name__)
 app.config.from_object(DefaultConfig)
 
 # Flask-login parameters
-#login_manager = LoginManager()
-#login_manager.init_app(app)
-#login_manager.login_view = "login"
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = "login"
 
-#@login_manager.user_loader
-#def load_user(uid):
-    #query = "SELECT * FROM administration WHERE uid = %s"
-    #data = (uid)
-    #db.execute(query, data)
-    #(row,) = db.cursor.fetchall()
-    #return User.User(row)
+@login_manager.user_loader
+def load_user(uid):
+    query = "SELECT * FROM administration WHERE uid = %s"
+    data = (uid)
+    if db.execute(query, data):
+        (row,) = db.fetchall()
+        return User.User(row)
+    else:
+        return None
 
 # Methods for actions
 methods = ["GET", "POST"]
 
+@app.route("/login", methods = methods)
+def login():
+    return AdminAuth.login()
+
+@app.route("/logout")
+def logout():
+    logout_user()
+    return redirect(url_for("index"))
+
 @app.route("/")
-#@login_required
 def index():
     return Institutes.index()
 
@@ -53,7 +63,6 @@ def subject(uid):
 @app.route("/download/<uid>")
 def download(uid):
     return Files.download(uid)
-
 
 if __name__ == "__main__":
     app.run()

@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 
 class User:
-    lang = "ru"
-
     def __init__(self, attributes):
         self.uid = attributes["uid"]
         self.username = attributes["username"]
