@@ -15,7 +15,9 @@ def index(department, course):
                                VALUES(%s, %s, %s, %s)"""
         data = (form.name.data, department, course, 1)
         db.execute(query, data)
-    query = "SELECT * FROM subjects WHERE department = %s AND course = %s ORDER BY name ASC"
+    query = """SELECT * FROM subjects WHERE
+                 department = %s AND course = %s AND active = 1
+                 ORDER BY name ASC"""
     data = (department, course)
     db.execute(query, data)
     subjects = db.fetchall()

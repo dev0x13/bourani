@@ -14,7 +14,7 @@
 </form>
 <hr>
 {% for file in files %}
-  <a href='{{ url_for("download", uid = file.uid) }}'>{{ file.filename }}</a>
+  <a href='{{ url_for("file", uid = file.uid) }}'>{{ file.filename }}</a>
   <br>
 {% endfor %}
 {% endblock %}

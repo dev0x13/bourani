@@ -64,5 +64,9 @@ def subject(uid):
 def download(uid):
     return Files.download(uid)
 
+@app.route("/file/<uid>", methods = methods)
+def file(uid):
+    return Files.show_file(uid)
+
 if __name__ == "__main__":
     app.run()

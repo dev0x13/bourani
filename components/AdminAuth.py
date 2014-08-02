@@ -3,7 +3,6 @@
 
 from flask import render_template, redirect, request, url_for
 from flask.ext.login import login_user
-from flask.ext.babel import gettext
 from werkzeug.security import check_password_hash
 from User import User
 from Forms import LoginForm

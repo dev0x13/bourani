@@ -1,0 +1,34 @@
+{% extends 'layout.html' %}
+{% block content %}
+<h1>Файл {{ info.filename }}</h1>
+Дата загрузки: {{ info.date }}
+<br>
+Описание: {{ info.description }}
+<br>
+<a href='{{ url_for("download", uid = info.uid) }}'>Скачать</a>
+<hr>
+<form action='' method='post'>
+    {{ form.hidden_tag() }}
+    <p>
+        Имя (необязательно):
+        {{ form.username }}<br>
+    </p>
+    <p>{{ form.text }}</p>
+    <p>{{ form.recaptcha }}</p>
+    <p><input type='submit' value='Отправить'></p>
+</form>
+{% for comment in comments %}
+  <hr>
+  <span style = 'font-size: 7pt;'>comment #{{ comment.uid }}</span>
+  <br>
+  {{ comment.username }} {{ comment.date }}
+  <br>
+  <!-- TODO: подумать над стилем -->
+  <div style = 'width: 50%; margin: 10px;
+                margin-top: 5px; padding: 5px;
+                border: dotted 1px black; font-size: 10pt;'>
+     {{ comment.text }}
+  </div>
+  <br>
+{% endfor %}
+{% endblock %}
