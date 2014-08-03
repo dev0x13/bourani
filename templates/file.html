@@ -1,9 +1,9 @@
 {% extends 'layout.html' %}
 {% block content %}
 <h1>Файл {{ info.filename }}</h1>
-Дата загрузки: {{ info.date }}
+Дата загрузки: <i>{{ info.date }}</i>
 <br>
-Описание: {{ info.description }}
+Описание: <i>{{ info.description }}</i>
 <br>
 <a href='{{ url_for("download", uid = info.uid) }}'>Скачать</a>
 <hr>
@@ -29,6 +29,5 @@
                 border: dotted 1px black; font-size: 10pt;'>
      {{ comment.text }}
   </div>
-  <br>
 {% endfor %}
 {% endblock %}

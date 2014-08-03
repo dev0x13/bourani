@@ -4,6 +4,7 @@ from flask import render_template, send_from_directory, abort
 from werkzeug import secure_filename
 import os
 import sys
+import Tools
 from Forms import FileForm, CommentForm
 
 sys.path.append(os.path.abspath(".."))
@@ -28,7 +29,7 @@ def index(subject):
     return render_template("files.html", files = files, form = form)
 
 def download(uid):
-    query = "SELECT * FROM files WHERE uid = %s AND active = 1"
+    query = "SELECT filename FROM files WHERE uid = %s AND active = 1"
     data = (uid)
     result = db.execute(query, data)
     if result:
@@ -44,19 +45,23 @@ def download(uid):
 def show_file(uid):
     form = CommentForm()
     if form.validate_on_submit():
+        username = u"Аноним" if not form.username.data else form.username.data
         query = """INSERT INTO comments(username, text, active, date, file)
                                VALUES(%s, %s, 1, NOW(), %s)"""
-        data = (form.username.data, form.text.data, uid)
+        data = (username, form.text.data, uid)
         db.execute(query, data)
     query = "SELECT * FROM files WHERE uid = %s"
     data = (uid)
     result = db.execute(query, data)
     if result:
         (info,) = db.fetchall()
+        info["date"] = Tools.format_date(info["date"])
         query = "SELECT * FROM comments WHERE file = %s AND active = 1"
         data = (uid)
         db.execute(query, data)
         comments = db.fetchall()
+        for comment in comments:
+            comment["date"] = Tools.format_date(comment["date"])
         return render_template("file.html", info = info,
                                comments = comments, form = form)
     return redirect(url_for("index"))

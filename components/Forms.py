@@ -5,6 +5,7 @@ from wtforms import TextField, TextAreaField, FileField, PasswordField
 from wtforms.validators import Required
 
 # TODO: очистка форм
+# TODO: CSRF
 
 class SubjectForm(Form):
     name = TextField("name", validators = [Required()])
