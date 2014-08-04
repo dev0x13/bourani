@@ -1,6 +1,6 @@
 {% extends 'layout.html' %}
 {% block content %}
-<h1>Файл {{ info.filename }}</h1>
+<h1>Файл {{ info.name }}</h1>
 Дата загрузки: <i>{{ info.date }}</i>
 <br>
 Описание: <i>{{ info.description }}</i>
@@ -10,12 +10,11 @@
 <form action='' method='post'>
     {{ form.hidden_tag() }}
     <p>
-        Имя (необязательно):
-        {{ form.username }}<br>
+        {{ form.username(placeholder = 'Имя (необязательно)') }}<br>
     </p>
-    <p>{{ form.text }}</p>
+    <p>{{ form.text(cols = 52, rows = 10, style = 'resize: none;') }}</p>
     <p>{{ form.recaptcha }}</p>
-    <p><input type='submit' value='Отправить'></p>
+    <p><input type='submit' value='Добавить'></p>
 </form>
 {% for comment in comments %}
   <hr>

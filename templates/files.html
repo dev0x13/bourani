@@ -3,19 +3,18 @@
 <h1>Файлы</h1>
 <hr>
 <form action='' method='post' name='subject' enctype='multipart/form-data'>
-    {{ form.hidden_tag() }}
+    <p>{{ form.file_to_upload }}</p>
     <p>
         Описание:
         <br>
-        {{ form.description }}<br>
+        {{ form.description(rows = 10, cols = 52, style = 'resize: none;') }}<br>
     </p>
-    <p>{{ form.file_to_upload }}</p>
     <p>{{ form.recaptcha }}</p>
     <p><input type='submit' value='Загрузить'></p>
 </form>
 <hr>
 {% for file in files %}
-  <a href='{{ url_for("file", uid = file.uid) }}'>{{ file.filename }}</a>
+  <a href='{{ url_for("file", uid = file.uid) }}'>{{ file.name }}</a>
   <br>
 {% endfor %}
 {% endblock %}

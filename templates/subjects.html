@@ -3,10 +3,10 @@
 <h1>Предметы</h1>
 <hr>
 <form action='' method='post' name='subject'>
-    {{ form.hidden_tag() }}
     <p>
-        Название предмета:
-        {{ form.name(size = 20 )}}<br>
+        <i>Название предмета:</i>
+        <br>
+        {{ form.name(size = 53)}}<br>
     </p>
     <p>{{ form.recaptcha }}</p>
     <p><input type='submit' value='Добавить'></p>

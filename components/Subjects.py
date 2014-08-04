@@ -15,6 +15,7 @@ def index(department, course):
                                VALUES(%s, %s, %s, %s)"""
         data = (form.name.data, department, course, 1)
         db.execute(query, data)
+        form.reset()
     query = """SELECT * FROM subjects WHERE
                  department = %s AND course = %s AND active = 1
                  ORDER BY name ASC"""

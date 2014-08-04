@@ -14,6 +14,7 @@ from db_connection import db
 
 def login():
     form = LoginForm()
+    # TODO: validation
     if form.validate_on_submit():
         query = "SELECT * FROM administration WHERE username = %s"
         data = (form.username.data)
