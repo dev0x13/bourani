@@ -29,7 +29,7 @@ methods = ["GET", "POST"]
 
 @app.route("/login", methods = methods)
 def login():
-    return AdminAuth.login()
+    return AdminAuth.index()
 
 @app.route("/logout")
 def logout():

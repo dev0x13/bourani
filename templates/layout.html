@@ -6,9 +6,9 @@
     <title>Bourani</title>
   </head>
   <body>
-    {% if current_user.is_authenticated(): %}
-      <div style = 'text-align: right;'>
-        {{ current_user.username }}
+    {% if current_user.is_authenticated() %}
+      <div style = 'text-align: right; float: right;'>
+        logged as <a href = '{{ url_for("logout") }}' title = 'Выйти'>{{ current_user.username }}</a>
       </div>
     {% endif %}
     {% block content %}{% endblock %}

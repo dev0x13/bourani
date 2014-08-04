@@ -12,9 +12,8 @@ import os
 sys.path.append(os.path.abspath(".."))
 from db_connection import db
 
-def login():
+def index():
     form = LoginForm()
-    # TODO: validation
     if form.validate_on_submit():
         query = "SELECT * FROM administration WHERE username = %s"
         data = (form.username.data)
