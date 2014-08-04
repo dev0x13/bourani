@@ -1,0 +1,15 @@
+{% extends 'layout.html' %}
+{% block content %}
+<h1>Удаление</h1>
+<hr>
+<form action='{{ action }}' method='post' name='subject'>
+    {{ form.hidden_tag() }}
+    <p>
+        Причина удаления:
+        <br>
+        {{ form.reason(rows = 10, cols = 52, style = 'resize: none;') }}<br>
+    </p>
+    <p>{{ form.recaptcha }}</p>
+    <p><input type='submit' value='Удалить'></p>
+</form>
+{% endblock %}

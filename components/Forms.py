@@ -32,3 +32,7 @@ class CommentForm(ReusableForm):
     username = TextField("username", [validators.Length(max = 255)])
     text = TextAreaField("text", [validators.Required()])
     recaptcha = RecaptchaField()
+
+class AdminForm(ReusableForm):
+    reason = TextAreaField("reason", [validators.Required()])
+    recaptcha = RecaptchaField()

@@ -4,7 +4,7 @@ from flask import Flask, render_template, flash, redirect, session, url_for, req
 from flask.ext.login import logout_user, LoginManager, current_user, login_required
 from db_connection import db
 from config import DefaultConfig
-from components import Institutes, User, Departments, Courses, Info, Subjects, Files, AdminAuth
+from components import Institutes, User, Departments, Courses, Info, Subjects, Files, Admin
 
 app = Flask(__name__)
 app.config.from_object(DefaultConfig)
@@ -29,7 +29,7 @@ methods = ["GET", "POST"]
 
 @app.route("/login", methods = methods)
 def login():
-    return AdminAuth.index()
+    return Admin.auth()
 
 @app.route("/logout")
 def logout():
@@ -60,6 +60,11 @@ def subjects(department, course):
 def subject(uid):
     return Files.index(uid)
 
+@login_required
+@app.route("/subjects/delete/<uid>", methods = methods)
+def delete_subject(uid):
+    return Subjects.delete(uid)
+
 @app.route("/download/<uid>")
 def download(uid):
     return Files.download(uid)
@@ -68,5 +73,15 @@ def download(uid):
 def file(uid):
     return Files.show_file(uid)
 
+@login_required
+@app.route("/delete/<entity>/<uid>")
+def delete(entity, uid):
+    return Admin.delete(entity, uid)
+
+@login_required
+@app.route("/files/delete/<uid>", methods = methods)
+def delete_file(uid):
+    return Files.delete(uid)
+    
 if __name__ == "__main__":
     app.run()

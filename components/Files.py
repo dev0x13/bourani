@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 
-from flask import render_template, send_from_directory, abort
+from flask import render_template, send_from_directory, abort, redirect, url_for
+from flask.ext.login import current_user
 from werkzeug import secure_filename
 import os
 import sys
 import hashlib
 import Tools
-from Forms import FileForm, CommentForm
+from Forms import FileForm, CommentForm, AdminForm
 
 sys.path.append(os.path.abspath(".."))
 from db_connection import db
@@ -68,4 +69,14 @@ def show_file(uid):
             comment["date"] = Tools.format_date(comment["date"])
         return render_template("file.html", info = info,
                                comments = comments, form = form)
+    return redirect(url_for("index"))
+
+# TODO: reqson format
+def delete(uid):
+    form = AdminForm()
+    if form.validate_on_submit():
+        comment = u"\r\nПричина: {0}\r\nАдминистратор: {1}\r\nВремя: ".format(form.reason.data, current_user.uid)
+        query = "UPDATE files SET active = 0, description = CONCAT(description, CONCAT(%s, NOW())) WHERE uid = %s"
+        data = (comment, uid)
+        db.execute(query, data)
     return redirect(url_for("index"))

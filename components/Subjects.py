@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 
-from flask import render_template
+from flask import render_template, redirect, url_for
+from flask.ext.login import current_user
 import os
 import sys
-from Forms import SubjectForm
+from Forms import SubjectForm, AdminForm
 
 sys.path.append(os.path.abspath(".."))
 from db_connection import db
@@ -23,3 +24,14 @@ def index(department, course):
     db.execute(query, data)
     subjects = db.fetchall()
     return render_template("subjects.html", subjects = subjects, form = form)
+
+def delete(uid):
+    form = AdminForm()
+    if form.validate_on_submit():
+        comment = u"Причина: {0}\r\nАдминистратор: {1}\r\nВремя: ".format(form.reason.data, current_user.uid)
+        query = "UPDATE subjects SET active = 0, comment = CONCAT(%s, NOW()) WHERE uid = %s"
+        data = (comment, uid)
+        db.execute(query, data)
+        query = "UPDATE files SET active = 0, description = CONCAT(description, CONCAT(%s, NOW())) WHERE subject = %s"
+        db.execute(query, data)
+    return redirect(url_for("index"))
