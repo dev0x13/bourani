@@ -1,0 +1,30 @@
+textarea
+{
+  resize: none;
+}
+
+.comment_content
+{
+  width: 50%;
+  margin: 10px;
+  margin-top: 5px;
+  padding: 5px;
+  border: dotted 1px black;
+  font-size: 10pt;
+}
+
+.comment_header
+{
+  font-size: 7pt;
+}
+
+.header
+{
+  text-align: right;
+  float: right;
+}
+
+.footer
+{
+  text-align: center;
+}
