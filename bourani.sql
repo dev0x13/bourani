@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Aug 04, 2014 at 03:09 PM
+-- Generation Time: Aug 05, 2014 at 09:22 AM
 -- Server version: 5.5.33-1
 -- PHP Version: 5.6.0RC1
 
@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `administration` (
   `username` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
 
@@ -45,8 +45,9 @@ CREATE TABLE IF NOT EXISTS `comments` (
   `date` datetime NOT NULL,
   `text` mediumtext NOT NULL,
   `active` bit(1) NOT NULL DEFAULT b'1',
-  `file` int(11) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+  `file` int(11) NOT NULL,
+  `comment` text NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=17 ;
 
 -- --------------------------------------------------------
 
@@ -70,11 +71,12 @@ CREATE TABLE IF NOT EXISTS `files` (
 `uid` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `filename` varchar(255) NOT NULL,
-  `description` mediumtext,
+  `description` text,
   `active` bit(1) NOT NULL DEFAULT b'1',
   `date` datetime NOT NULL,
-  `subject` int(11) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+  `subject` int(11) NOT NULL,
+  `comment` text NOT NULL
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
 -- --------------------------------------------------------
 
@@ -98,9 +100,9 @@ CREATE TABLE IF NOT EXISTS `subjects` (
   `name` varchar(255) NOT NULL,
   `department` int(11) NOT NULL,
   `course` int(11) NOT NULL,
-  `comment` mediumtext,
+  `comment` text,
   `active` bit(1) NOT NULL DEFAULT b'1'
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
 -- Indexes for dumped tables
@@ -150,12 +152,12 @@ ALTER TABLE `subjects`
 -- AUTO_INCREMENT for table `administration`
 --
 ALTER TABLE `administration`
-MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=17;
 --
 -- AUTO_INCREMENT for table `departments`
 --
@@ -165,7 +167,7 @@ MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
 -- AUTO_INCREMENT for table `files`
 --
 ALTER TABLE `files`
-MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `institutes`
 --
@@ -175,7 +177,7 @@ MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=17;
 -- AUTO_INCREMENT for table `subjects`
 --
 ALTER TABLE `subjects`
-MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

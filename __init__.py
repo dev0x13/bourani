@@ -4,7 +4,7 @@ from flask import Flask, render_template, flash, redirect, session, url_for, req
 from flask.ext.login import logout_user, LoginManager, current_user, login_required
 from db_connection import db
 from config import DefaultConfig
-from components import Institutes, User, Departments, Courses, Info, Subjects, Files, Admin
+from components import Institutes, User, Departments, Courses, Info, Subjects, Files, Admin, Comments
 
 app = Flask(__name__)
 app.config.from_object(DefaultConfig)
@@ -52,18 +52,13 @@ def institute(uid):
 def department(uid):
     return Courses.index(uid)
 
-@app.route("/subjects/<department>/<course>", methods = methods)
+@app.route("/departments/<department>/<course>", methods = methods)
 def subjects(department, course):
     return Subjects.index(department, course)
 
 @app.route("/subject/<uid>", methods = methods)
 def subject(uid):
     return Files.index(uid)
-
-@login_required
-@app.route("/subjects/delete/<uid>", methods = methods)
-def delete_subject(uid):
-    return Subjects.delete(uid)
 
 @app.route("/download/<uid>")
 def download(uid):
@@ -72,6 +67,11 @@ def download(uid):
 @app.route("/file/<uid>", methods = methods)
 def file(uid):
     return Files.show_file(uid)
+
+# TODO: переработать
+@app.route("/comment/<file_uid>", methods = methods)
+def comment(file_uid):
+    return Comments.add(file_uid)
 
 @login_required
 @app.route("/delete/<entity>/<uid>")
@@ -82,6 +82,16 @@ def delete(entity, uid):
 @app.route("/files/delete/<uid>", methods = methods)
 def delete_file(uid):
     return Files.delete(uid)
-    
+
+@login_required
+@app.route("/subjects/delete/<uid>", methods = methods)
+def delete_subject(uid):
+    return Subjects.delete(uid)
+
+@login_required
+@app.route("/comments/delete/<uid>", methods = methods)
+def delete_comment(uid):
+    return Comments.delete(uid)
+
 if __name__ == "__main__":
     app.run()

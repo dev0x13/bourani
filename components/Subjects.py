@@ -19,7 +19,7 @@ def index(department, course):
         form.reset()
     query = """SELECT * FROM subjects WHERE
                  department = %s AND course = %s AND active = 1
-                 ORDER BY name ASC"""
+               ORDER BY name ASC"""
     data = (department, course)
     db.execute(query, data)
     subjects = db.fetchall()
@@ -28,10 +28,16 @@ def index(department, course):
 def delete(uid):
     form = AdminForm()
     if form.validate_on_submit():
-        comment = u"Причина: {0}\r\nАдминистратор: {1}\r\nВремя: ".format(form.reason.data, current_user.uid)
+        comment = u"-[УДАЛЕНО]-\r\nПричина: {0}\r\nАдминистратор: {1}\r\nВремя: ".format(form.reason.data, current_user.uid)
         query = "UPDATE subjects SET active = 0, comment = CONCAT(%s, NOW()) WHERE uid = %s"
         data = (comment, uid)
         db.execute(query, data)
-        query = "UPDATE files SET active = 0, description = CONCAT(description, CONCAT(%s, NOW())) WHERE subject = %s"
+        query = "UPDATE files SET active = 0, comment = CONCAT(%s, NOW()) WHERE subject = %s"
         db.execute(query, data)
+    query = "SELECT department, course FROM subjects WHERE uid = %s"
+    data = (uid)
+    result = db.execute(query, data)
+    if result:
+        (info,) = db.fetchall()
+        return redirect(url_for("subjects", department = info["department"], course = info["course"]))
     return redirect(url_for("index"))

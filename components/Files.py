@@ -5,9 +5,8 @@ from flask.ext.login import current_user
 from werkzeug import secure_filename
 import os
 import sys
-import hashlib
 import Tools
-from Forms import FileForm, CommentForm, AdminForm
+from Forms import FileForm, AdminForm, CommentForm
 
 sys.path.append(os.path.abspath(".."))
 from db_connection import db
@@ -47,18 +46,11 @@ def download(uid):
             abort(404)
 
 def show_file(uid):
-    form = CommentForm()
-    if form.validate_on_submit():
-        username = u"Аноним" if not form.username.data else form.username.data
-        query = """INSERT INTO comments(username, text, active, date, file)
-                               VALUES(%s, %s, 1, NOW(), %s)"""
-        data = (username, form.text.data, uid)
-        db.execute(query, data)
-        form.reset()
-    query = "SELECT * FROM files WHERE uid = %s"
+    query = "SELECT * FROM files WHERE uid = %s AND active = 1"
     data = (uid)
     result = db.execute(query, data)
     if result:
+        form = CommentForm()
         (info,) = db.fetchall()
         info["date"] = Tools.format_date(info["date"])
         query = "SELECT * FROM comments WHERE file = %s AND active = 1"
@@ -71,12 +63,17 @@ def show_file(uid):
                                comments = comments, form = form)
     return redirect(url_for("index"))
 
-# TODO: reqson format
 def delete(uid):
     form = AdminForm()
     if form.validate_on_submit():
-        comment = u"\r\nПричина: {0}\r\nАдминистратор: {1}\r\nВремя: ".format(form.reason.data, current_user.uid)
-        query = "UPDATE files SET active = 0, description = CONCAT(description, CONCAT(%s, NOW())) WHERE uid = %s"
+        comment = u"-[УДАЛЕНО]-\r\nПричина: {0}\r\nАдминистратор: {1}\r\nВремя: ".format(form.reason.data, current_user.uid)
+        query = "UPDATE files SET active = 0, comment = CONCAT(%s, NOW()) WHERE uid = %s"
         data = (comment, uid)
         db.execute(query, data)
+    query = "SELECT subject FROM files WHERE uid = %s"
+    data = (uid)
+    result = db.execute(query, data)
+    if result:
+        (info,) = db.fetchall()
+        return redirect(url_for("subject", uid = info["subject"]))
     return redirect(url_for("index"))
