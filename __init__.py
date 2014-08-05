@@ -27,6 +27,8 @@ def load_user(uid):
 # Methods for actions
 methods = ["GET", "POST"]
 
+# Common routes
+
 @app.route("/login", methods = methods)
 def login():
     return Admin.auth()
@@ -44,6 +46,13 @@ def index():
 def info():
     return Info.index()
 
+@login_required
+@app.route("/delete/<entity>/<uid>")
+def delete(entity, uid):
+    return Admin.delete(entity, uid)
+
+# Abstraction levels
+
 @app.route("/institute/<uid>")
 def institute(uid):
     return Departments.index(uid)
@@ -60,38 +69,32 @@ def subjects(department, course):
 def subject(uid):
     return Files.index(uid)
 
-@app.route("/download/<uid>")
-def download(uid):
-    return Files.download(uid)
-
-@app.route("/file/<uid>", methods = methods)
-def file(uid):
-    return Files.show_file(uid)
-
-# TODO: переработать
-@app.route("/comment/<file_uid>", methods = methods)
-def comment(file_uid):
-    return Comments.add(file_uid)
-
-@login_required
-@app.route("/delete/<entity>/<uid>")
-def delete(entity, uid):
-    return Admin.delete(entity, uid)
-
-@login_required
-@app.route("/files/delete/<uid>", methods = methods)
-def delete_file(uid):
-    return Files.delete(uid)
-
 @login_required
 @app.route("/subjects/delete/<uid>", methods = methods)
 def delete_subject(uid):
     return Subjects.delete(uid)
 
+@app.route("/file/<uid>", methods = methods)
+def file(uid):
+    return Files.show_file(uid)
+
+@app.route("/file/<file_uid>/comment", methods = methods)
+def add_comment(file_uid):
+    return Comments.add(file_uid)
+
 @login_required
 @app.route("/comments/delete/<uid>", methods = methods)
 def delete_comment(uid):
     return Comments.delete(uid)
+
+@app.route("/download/<uid>")
+def download_file(uid):
+    return Files.download(uid)
+
+@login_required
+@app.route("/files/delete/<uid>", methods = methods)
+def delete_file(uid):
+    return Files.delete(uid)
 
 if __name__ == "__main__":
     app.run()

@@ -1,6 +1,11 @@
 # -*- coding: utf-8 -*-
 
 import re
+import os
+import sys
+
+sys.path.append(os.path.abspath(".."))
+from db_connection import db
 
 def format_date(date):
     regexp = "^(\d{4})-(\d{2})-(\d{2})\s(\d{2}):(\d{2}):(\d{2})$"
@@ -11,3 +16,9 @@ def format_date(date):
                                                 matches[0], matches[3],
                                                 matches[4], matches[5])
     return "0000-00-00 00:00:00"
+
+def exists(table, uid):
+    query = "SELECT uid FROM {0} WHERE uid = %s".format(table)
+    data = (uid)
+    result = db.execute(query, data)
+    return True if result else False

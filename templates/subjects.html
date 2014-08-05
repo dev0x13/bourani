@@ -1,11 +1,11 @@
 {% extends 'layout.html' %}
 {% block content %}
-<h1>Предметы</h1>
+<h1>Дисциплины</h1>
 <hr>
 <form action = '' method = 'post' name = 'subject'>
     {{ form.hidden_tag() }}
     <p>
-        <i>Название предмета:</i>
+        <i>Название дисциплины:</i>
         <br>
         {{ form.name(size = 53)}}<br>
     </p>
@@ -14,15 +14,19 @@
 </form>
 <hr>
 <table>
-  {% for subject in subjects %}
-    <tr>
-      <td>
-        <a href = '{{ url_for("subject", uid = subject.uid) }}'>{{ subject.name }}</a>
-      </td>
-      {% if current_user.is_authenticated() %}
-        <td><a href = '{{ url_for("delete", entity = "subjects", uid = subject.uid) }}'>[Удалить]</a></td>
-      {% endif %}
-    </tr>
-  {% endfor %}
+  {% if not subjects %}
+    <i class = 'placeholder'>Пока ни одной дисциплины не добавлено</i>
+  {% else %}
+    {% for subject in subjects %}
+      <tr>
+        <td>
+          <a href = '{{ url_for("subject", uid = subject.uid) }}'>{{ subject.name }}</a>
+        </td>
+        {% if current_user.is_authenticated() %}
+          <td><a href = '{{ url_for("delete", entity = "subjects", uid = subject.uid) }}'>[Удалить]</a></td>
+        {% endif %}
+      </tr>
+    {% endfor %}
+  {% endif %}
 </table>
 {% endblock %}

@@ -6,6 +6,7 @@ from flask.ext.login import login_user, current_user
 from werkzeug.security import check_password_hash
 from User import User
 from Forms import LoginForm, AdminForm
+import Tools
 import sys
 import os
 
@@ -25,16 +26,13 @@ def auth():
             return redirect(url_for("index"))
     return render_template("login.html", form = form)
 
-def delete(entity, uid):
+def delete(table, uid):
     query = "SHOW TABLES LIKE %s"
-    data = (entity)
+    data = (table)
     existence = db.execute(query, data)
     if existence:
-        query = "SELECT uid FROM {0} WHERE uid = %s".format(entity)
-        data = (uid)
-        element = db.execute(query, data)
-        if element:
+        if Tools.exists(table, uid):
             form = AdminForm()
-            action = "/{0}/delete/{1}".format(entity, uid)
+            action = "/{0}/delete/{1}".format(table, uid)
             return render_template("admin.html", form = form, action = action)
     return redirect(url_for("index"))

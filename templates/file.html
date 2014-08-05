@@ -5,9 +5,9 @@
 <br>
 Описание: <i>{{ info.description }}</i>
 <br>
-<a href='{{ url_for("download", uid = info.uid) }}'>Скачать</a>
+<a href='{{ url_for("download_file", uid = info.uid) }}'>Скачать</a>
 <hr>
-<form action='{{ url_for("comment", file_uid = info.uid) }}' method='post'>
+<form action='{{ url_for("add_comment", file_uid = info.uid) }}' method='post'>
     {{ form.hidden_tag() }}
     <p>
         {{ form.username(placeholder = 'Имя (необязательно)') }}<br>
