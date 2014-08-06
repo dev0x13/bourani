@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+{% block content %}
+<h1>Поиск</h1>
+<hr>
+<table>
+  {% if not subjects %}
+    <i class = 'placeholder'>Ни одного совпадения не найдено</i>
+  {% else %}
+    <h2>Найдено <b>{{ len(files) }}</b> совпадений</h2>
+    {% for file in files %}
+      <tr>
+        <td>
+          <a href='{{ url_for("file", uid = file.uid) }}'>{{ file.name }}</a>
+        </td>
+        {% if current_user.is_authenticated() %}
+          <td><a href = '{{ url_for("delete", entity = "files", uid = file.uid) }}'>[Удалить]</a></td>
+        {% endif %}
+      </tr>
+    {% endfor %}
+  {% endif %}
+</table>
+{% endblock %}

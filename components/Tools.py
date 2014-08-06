@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from flask import redirect, url_for
+from functools import wraps
 import re
 import os
 import sys
@@ -17,8 +19,16 @@ def format_date(date):
                                                 matches[4], matches[5])
     return "0000-00-00 00:00:00"
 
-def exists(table, uid):
-    query = "SELECT uid FROM {0} WHERE uid = %s".format(table)
-    data = (uid)
-    result = db.execute(query, data)
-    return True if result else False
+def exists(table, keyword):
+    def decorator(function):
+        @wraps(function)
+        def wrapper(*args, **kwargs):
+            if kwargs:
+                query = "SELECT uid FROM {0} WHERE uid = %s".format(table)
+                data = (kwargs[keyword])
+                result = db.execute(query, data)
+                if result:
+                    return function(*args, **kwargs)
+            return redirect(url_for("index"))
+        return wrapper
+    return decorator

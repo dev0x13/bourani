@@ -31,7 +31,10 @@ def delete(table, uid):
     data = (table)
     existence = db.execute(query, data)
     if existence:
-        if Tools.exists(table, uid):
+        query = "SELECT uid FROM {0} WHERE uid = %s".format(table)
+        data = (uid)
+        result = db.execute(query, data)
+        if result:
             form = AdminForm()
             action = "/{0}/delete/{1}".format(table, uid)
             return render_template("admin.html", form = form, action = action)

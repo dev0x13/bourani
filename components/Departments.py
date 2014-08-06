@@ -9,10 +9,8 @@ sys.path.append(os.path.abspath(".."))
 from db_connection import db
 
 def index(uid):
-    if Tools.exists("institutes", uid):
-        query = "SELECT * FROM departments WHERE institute = %s ORDER BY name ASC"
-        data = (uid)
-        db.execute(query, data)
-        departments = db.fetchall()
-        return render_template("departments.html", departments = departments)
-    return redirect(url_for("index"))
+    query = "SELECT * FROM departments WHERE institute = %s ORDER BY name ASC"
+    data = (uid)
+    db.execute(query, data)
+    departments = db.fetchall()
+    return render_template("departments.html", departments = departments)
