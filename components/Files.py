@@ -7,7 +7,7 @@ import os
 import sys
 import hashlib
 import Tools
-from Forms import FileForm, AdminForm, CommentForm
+from Forms import FileForm, AdminForm, CommentForm, SearchForm
 
 sys.path.append(os.path.abspath(".."))
 from db_connection import db
@@ -81,5 +81,19 @@ def delete(uid):
         (info,) = db.fetchall()
         return redirect(url_for("subject", uid = info["subject"]))
 
-def search(request):
-    return redirect(url_for("index"))
+def search():
+    form = SearchForm()
+    files = 0
+    if form.validate_on_submit():
+        search_strings = form.search_string.data.split(" ")
+        name_criteria = ""
+        description_criteria = ""
+        data = []
+        for ss in search_strings:
+            name_criteria += u" AND LOWER(name) LIKE %s"
+            description_criteria += u" AND LOWER(description) LIKE %s"
+            data.append("%{0}%".format(ss.lower()))
+        query = "SELECT * FROM files WHERE (1{0}) OR (1{1}) AND active = 1".format(name_criteria, description_criteria)
+        db.execute(query, data + data)
+        files = db.fetchall()
+    return render_template("search.html", files = files, form = form)

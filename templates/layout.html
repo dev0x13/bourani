@@ -7,11 +7,13 @@
     <title>Bourani</title>
   </head>
   <body>
-    {% if current_user.is_authenticated() %}
       <div class = 'header'>
-        logged as <a href = '{{ url_for("logout") }}' title = 'Выйти'>{{ current_user.username }}</a>
+        <a href = '{{ url_for("search_file") }}'>[Поиск]</a>
+        {% if current_user.is_authenticated() %}
+          <br>
+          logged as <a href = '{{ url_for("logout") }}' title = 'Выйти'>{{ current_user.username }}</a>
+        {% endif %}
       </div>
-    {% endif %}
     {% block content %}{% endblock %}
     <hr>
     <div class = 'footer'>

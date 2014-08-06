@@ -2,21 +2,28 @@
 {% block content %}
 <h1>Поиск</h1>
 <hr>
+<form action='' method='post'>
+    {{ form.hidden_tag() }}
+    <p>{{ form.search_string() }}
+    <input type='submit' value='Искать'></p>
+</form>
 <table>
-  {% if not subjects %}
-    <i class = 'placeholder'>Ни одного совпадения не найдено</i>
-  {% else %}
-    <h2>Найдено <b>{{ len(files) }}</b> совпадений</h2>
-    {% for file in files %}
-      <tr>
-        <td>
-          <a href='{{ url_for("file", uid = file.uid) }}'>{{ file.name }}</a>
-        </td>
-        {% if current_user.is_authenticated() %}
-          <td><a href = '{{ url_for("delete", entity = "files", uid = file.uid) }}'>[Удалить]</a></td>
-        {% endif %}
-      </tr>
-    {% endfor %}
+  {% if files != 0 %}
+    {% if files|length == 0 %}
+      <i class = 'placeholder'>Ни одного совпадения не найдено</i>
+    {% else %}
+      <h2>Найдено совпадений: <b>{{ files|length }}</b></h2>
+      {% for file in files %}
+        <tr>
+          <td>
+            <a href='{{ url_for("file", uid = file.uid) }}'>{{ file.name }}</a>
+          </td>
+          {% if current_user.is_authenticated() %}
+            <td><a href = '{{ url_for("delete", entity = "files", uid = file.uid) }}'>[Удалить]</a></td>
+          {% endif %}
+        </tr>
+      {% endfor %}
+    {% endif %}
   {% endif %}
 </table>
 {% endblock %}

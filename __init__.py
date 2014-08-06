@@ -101,6 +101,10 @@ def delete_comment(uid):
 def download_file(uid):
     return Files.download(uid = uid)
 
+@app.route("/search", methods = methods)
+def search_file():
+    return Files.search()
+
 @login_required
 @app.route("/files/delete/<uid>", methods = methods)
 @Tools.exists("files", "uid")

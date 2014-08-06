@@ -36,3 +36,6 @@ class CommentForm(ReusableForm):
 class AdminForm(ReusableForm):
     reason = TextAreaField("reason", [validators.Required()])
     recaptcha = RecaptchaField()
+
+class SearchForm(ReusableForm):
+    search_string = TextField("search_string")
