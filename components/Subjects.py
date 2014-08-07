@@ -9,7 +9,7 @@ import sys
 sys.path.append(os.path.abspath(".."))
 from db_connection import db
 
-def index(department, course):
+def index(course, department):
     if course in ("1", "2", "3", "4", "5"):
         form = SubjectForm()
         if form.validate_on_submit():
