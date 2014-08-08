@@ -24,7 +24,7 @@ def exists(table, keyword):
         @wraps(function)
         def wrapper(*args, **kwargs):
             if kwargs:
-                query = "SELECT uid FROM {0} WHERE uid = %s".format(table)
+                query = "SELECT uid FROM {0} WHERE uid = %s AND active = 1".format(table)
                 data = (kwargs[keyword])
                 result = db.execute(query, data)
                 if result:
