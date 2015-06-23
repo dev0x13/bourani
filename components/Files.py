@@ -92,7 +92,7 @@ def search():
         for ss in search_strings:
             name_criteria += u" AND LOWER(name) LIKE %s"
             description_criteria += u" AND LOWER(description) LIKE %s"
-            data.append("%{0}%".format(ss.lower()))
+            data.append("%{0}%".format(ss.lower().encode("utf-8")))
         query = "SELECT * FROM files WHERE ((1{0}) OR (1{1})) AND active = 1".format(name_criteria, description_criteria)
         db.execute(query, data + data)
         files = db.fetchall()

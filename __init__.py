@@ -72,7 +72,7 @@ def subjects(department, course):
 @app.route("/subject/<uid>", methods = methods)
 @Tools.exists("subjects", "uid")
 def subject(uid):
-    return Files.index(uid = uid)
+    return Files.index(subject = uid)
 
 @login_required
 @app.route("/subjects/delete/<uid>", methods = methods)
