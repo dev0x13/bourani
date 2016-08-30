@@ -6,7 +6,7 @@
 Описание: <i>{{ info.description }}</i>
 <br>
 <a href='{{ url_for("download_file", uid = info.uid) }}'>Скачать</a>
-{% if current_user.is_authenticated() %}
+{% if current_user.is_authenticated %}
   <br><a href = '{{ url_for("delete", entity = "files", uid = info.uid) }}'>[Удалить]</a>
 {% endif %}
 <hr>
@@ -23,7 +23,7 @@
   <hr>
   <span class = 'comment_header'>
     comment #{{ comment.uid }}
-    {% if current_user.is_authenticated() %}
+    {% if current_user.is_authenticated %}
       <a href = '{{ url_for("delete", entity = "comments", uid = comment.uid) }}'>[Удалить]</a>
     {% endif %}
   </span>

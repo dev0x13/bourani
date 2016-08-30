@@ -9,7 +9,7 @@
   <body>
       <div class = 'header'>
         <a href = '{{ url_for("search_file") }}'>[Поиск]</a>
-        {% if current_user.is_authenticated() %}
+        {% if current_user.is_authenticated %}
           <br>
           logged as <a href = '{{ url_for("logout") }}' title = 'Выйти'>{{ current_user.username }}</a>
         {% endif %}

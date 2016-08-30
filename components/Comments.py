@@ -6,7 +6,7 @@ from werkzeug import secure_filename
 import os
 import sys
 import Tools
-from Forms import CommentForm, AdminForm
+from .Forms import CommentForm, AdminForm
 
 sys.path.append(os.path.abspath(".."))
 from db_connection import db

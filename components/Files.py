@@ -7,7 +7,7 @@ import os
 import sys
 import hashlib
 import Tools
-from Forms import FileForm, AdminForm, CommentForm, SearchForm
+from .Forms import FileForm, AdminForm, CommentForm, SearchForm
 
 sys.path.append(os.path.abspath(".."))
 from db_connection import db
@@ -26,9 +26,9 @@ def index(subject):
             data = (name, filename, form.description.data, subject)
             db.execute(query, data)
             path = 'uploads/{0}/'.format(subject)
-            if not os.path.exists(path):
-                os.mkdir(path, 0777)
-            form.file_to_upload.data.save(path + filename)
+            #if not os.path.exists(path):
+                #os.mkdir(path, 0777)
+            #form.file_to_upload.data.save(path + filename)
             form.reset()
     query = "SELECT * FROM files WHERE subject = %s AND active = 1 ORDER BY date DESC"
     data = (subject)

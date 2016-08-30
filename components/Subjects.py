@@ -2,7 +2,7 @@
 
 from flask import render_template, redirect, url_for
 from flask.ext.login import current_user
-from Forms import SubjectForm, AdminForm
+from .Forms import SubjectForm, AdminForm
 import os
 import sys
 

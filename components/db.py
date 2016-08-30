@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 
-import MySQLdb
+import pymysql
+pymysql.install_as_MySQLdb()
 
 class Db(object):
     def __init__(self, host, user, password, db):
-        self.db = MySQLdb.connect(host, user, password, db, charset = "utf8")
-        self.cursor = self.db.cursor(MySQLdb.cursors.DictCursor)
+        self.db = pymysql.connect(host, user, password, db, charset = "utf8")
+        self.cursor = self.db.cursor(pymysql.cursors.DictCursor)
 
     def execute(self, query, data = None):
         if not data:

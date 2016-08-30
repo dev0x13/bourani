@@ -4,8 +4,8 @@
 from flask import render_template, redirect, url_for
 from flask.ext.login import login_user, current_user
 from werkzeug.security import check_password_hash
-from User import User
-from Forms import LoginForm, AdminForm
+from .User import User
+from .Forms import LoginForm, AdminForm
 import Tools
 import sys
 import os
